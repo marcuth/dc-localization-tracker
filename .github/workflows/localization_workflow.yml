@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 12 * * *'
 
+  workflow_dispatch:  # Permite execução manual
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
