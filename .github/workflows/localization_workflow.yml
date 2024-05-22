@@ -19,6 +19,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Create dummy README.MD
+        run: echo "Temporary README" > README.MD
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
