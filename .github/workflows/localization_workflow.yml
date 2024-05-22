@@ -1,0 +1,45 @@
+name: Run Localization Script Daily
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install dcutils discord-webhook python-decouple
+
+      - name: Copy .env file
+        run: |
+          echo DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL=${{ secrets.DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL }} >> .env
+          echo DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL=${{ secrets.DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL }} >> .env
+
+      - name: Run localization script
+        run: |
+          python main.py
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Update localization files"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
