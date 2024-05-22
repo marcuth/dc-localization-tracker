@@ -1,11 +1,15 @@
 name: Run Localization Script Daily
+
 on:
   schedule:
     - cron: '0 12 * * *'
+
   workflow_dispatch:  # Permite execução manual
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -33,10 +37,13 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          git commit -m "Update data from API"
-          git push --force
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Update localization files"
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
