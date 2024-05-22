@@ -24,12 +24,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install dragon-city-utils discord-webhook python-decouple
 
-      - name: Copy .env file
-        run: |
-          echo DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL=${{ secrets.DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL }} >> .env
-          echo DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL=${{ secrets.DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL }} >> .env
-
       - name: Run localization script
+      env:
+        DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL: ${{ secrets.DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL }}
+        DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL: ${{ secrets.DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL }}
+
         run: |
           python main.py
 
