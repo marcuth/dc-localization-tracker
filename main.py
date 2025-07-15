@@ -23,7 +23,7 @@ def send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:
     try:
         bot.send_message(
             chat_id = telegram_updates_channel_id,
-            text = f"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\n\n{", ".join(new_fields)}"
+            text = f"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\n\n{"- \n".join(new_fields)}"
         )
 
     except:
