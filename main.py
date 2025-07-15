@@ -9,7 +9,7 @@ import os
 localization_comparison_webhook_url = decouple.config("DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL")
 localization_file_sending_webhook_url = decouple.config("DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL")
 telegram_bot_token = decouple.config("TELEGRAM_BOT_TOKEN")
-telegram_channel_id = decouple.config("TELEGRAM_CHANNEL_ID")
+telegram_updates_channel_id = decouple.config("TELEGRAM_UPDATES_CHANNEL_ID")
 
 languages = ["br", "en", "es"]
 
@@ -22,7 +22,7 @@ def send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:
     
     try:
         bot.send_message(
-            chat_id = telegram_channel_id,
+            chat_id = telegram_updates_channel_id,
             text = f"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\n\n{", ".join(new_fields)}"
         )
 
