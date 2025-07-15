@@ -1,0 +1,160 @@
+[
+    {
+        "label": "Localization",
+        "importPath": "dcutils.static.localization",
+        "description": "dcutils.static.localization",
+        "isExtraImport": true,
+        "detail": "dcutils.static.localization",
+        "documentation": {}
+    },
+    {
+        "label": "DiscordWebhook",
+        "importPath": "discord_webhook",
+        "description": "discord_webhook",
+        "isExtraImport": true,
+        "detail": "discord_webhook",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "TeleBot",
+        "importPath": "telebot",
+        "description": "telebot",
+        "isExtraImport": true,
+        "detail": "telebot",
+        "documentation": {}
+    },
+    {
+        "label": "decouple",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "decouple",
+        "description": "decouple",
+        "detail": "decouple",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "send_alert_to_updates_telegram_channel",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"\n        )\n    except:\n        print(\"Erro ao enviar mensagem para o Telegram.\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "send_message_of_comparision_result_on_discord",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def send_message_of_comparision_result_on_discord(comparasion_result: dict, language: str) -> None:\n    webhook = DiscordWebhook(localization_comparison_webhook_url)\n    now = datetime.now()\n    current_time = now.strftime(\"%d/%m/%Y - %H:%M:%S\")\n    comparasion_result_filename = \"comparasion_result.json\"\n    file_content = json.dumps(comparasion_result, indent = 4)\n    webhook.add_file(file = file_content, filename = comparasion_result_filename)\n    message_content = f\"Resultado da comparação para o dados de localização `{language}` em {current_time}.\"\n    webhook.set_content(message_content)\n    response = webhook.execute()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "send_message_of_compressed_localization",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def send_message_of_compressed_localization(compressed_localization_file_path: str, language: str) -> None:\n    webhook = DiscordWebhook(localization_file_sending_webhook_url)\n    now = datetime.now()\n    current_time = now.strftime(\"%d/%m/%Y - %H:%M:%S\")\n    localization_filename = f\"localization_{language}_{now.month}_{now.day}_{now.year}.json.gz\"\n    with open(compressed_localization_file_path, \"rb\") as file:\n        file_content = file.read()\n    webhook.add_file(file = file_content, filename = localization_filename)\n    message_content = f\"Dados de localização `{language}` em {current_time}.\"\n    webhook.set_content(message_content)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def main() -> None:\n    if not os.path.exists(localizations_out_dir):\n        os.mkdir(localizations_out_dir)\n    if not os.path.exists(compressed_localizations_out_dir):\n        os.mkdir(compressed_localizations_out_dir)\n    for language in languages:\n        localization = Localization(language)\n        localization_filename = f\"localization_{language}.json\"\n        localization_file_path = os.path.join(localizations_out_dir, localization_filename)\n        if os.path.exists(localization_file_path):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "localization_comparison_webhook_url",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "localization_comparison_webhook_url = decouple.config(\"DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL\")\nlocalization_file_sending_webhook_url = decouple.config(\"DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL\")\ntelegram_bot_token = decouple.config(\"TELEGRAM_BOT_TOKEN\")\ntelegram_channel_id = decouple.config(\"TELEGRAM_CHANNEL_ID\")\nlanguages = [\"br\", \"en\", \"es\"]\nlocalizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "localization_file_sending_webhook_url",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "localization_file_sending_webhook_url = decouple.config(\"DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL\")\ntelegram_bot_token = decouple.config(\"TELEGRAM_BOT_TOKEN\")\ntelegram_channel_id = decouple.config(\"TELEGRAM_CHANNEL_ID\")\nlanguages = [\"br\", \"en\", \"es\"]\nlocalizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "telegram_bot_token",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "telegram_bot_token = decouple.config(\"TELEGRAM_BOT_TOKEN\")\ntelegram_channel_id = decouple.config(\"TELEGRAM_CHANNEL_ID\")\nlanguages = [\"br\", \"en\", \"es\"]\nlocalizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "telegram_channel_id",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "telegram_channel_id = decouple.config(\"TELEGRAM_CHANNEL_ID\")\nlanguages = [\"br\", \"en\", \"es\"]\nlocalizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_channel_id,",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "languages",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "languages = [\"br\", \"en\", \"es\"]\nlocalizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "localizations_out_dir",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "localizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"\n        )",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "compressed_localizations_out_dir",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "compressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"\n        )\n    except:",
+        "detail": "main",
+        "documentation": {}
+    }
+]
