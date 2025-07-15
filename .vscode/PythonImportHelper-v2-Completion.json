@@ -63,7 +63,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"\n        )\n    except:\n        print(\"Erro ao enviar mensagem para o Telegram.\")",
+        "peekOfCode": "def send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\"- \\n\".join(new_fields)}\"\n        )\n    except:\n        print(\"Erro ao enviar mensagem para o Telegram.\")",
         "detail": "main",
         "documentation": {}
     },
@@ -135,7 +135,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "languages = [\"br\", \"en\", \"es\"]\nlocalizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"",
+        "peekOfCode": "languages = [\"br\", \"en\", \"es\"]\nlocalizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\"- \\n\".join(new_fields)}\"",
         "detail": "main",
         "documentation": {}
     },
@@ -144,7 +144,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "localizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"\n        )",
+        "peekOfCode": "localizations_out_dir = \"localizations\"\ncompressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\"- \\n\".join(new_fields)}\"\n        )",
         "detail": "main",
         "documentation": {}
     },
@@ -153,7 +153,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "compressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\", \".join(new_fields)}\"\n        )\n    except:",
+        "peekOfCode": "compressed_localizations_out_dir = os.path.join(localizations_out_dir, \"compressed\")\ndef send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:\n    bot = TeleBot(telegram_bot_token)\n    new_fields = comparasion_result[\"new_fields\"]\n    try:\n        bot.send_message(\n            chat_id = telegram_updates_channel_id,\n            text = f\"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\\n\\n{\"- \\n\".join(new_fields)}\"\n        )\n    except:",
         "detail": "main",
         "documentation": {}
     }
