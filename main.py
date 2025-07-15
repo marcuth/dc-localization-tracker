@@ -1,17 +1,36 @@
 from dcutils.static.localization import Localization
 from discord_webhook import DiscordWebhook
 from datetime import datetime
+from telebot import TeleBot
 import decouple
 import json
 import os
 
 localization_comparison_webhook_url = decouple.config("DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL")
 localization_file_sending_webhook_url = decouple.config("DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL")
+telegram_bot_token = decouple.config("TELEGRAM_BOT_TOKEN")
+telegram_channel_id = decouple.config("TELEGRAM_CHANNEL_ID")
 
 languages = ["br", "en", "es"]
 
 localizations_out_dir = "localizations"
 compressed_localizations_out_dir = os.path.join(localizations_out_dir, "compressed")
+
+def send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:
+    bot = TeleBot(telegram_bot_token)
+    new_fields = comparasion_result["new_fields"]
+    
+    try:
+        bot.send_message(
+            chat_id = telegram_channel_id,
+            text = f"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\n\n{", ".join(new_fields)}"
+        )
+
+    except:
+        print("Erro ao enviar mensagem para o Telegram.")
+
+    finally:
+        bot.close()
 
 def send_message_of_comparision_result_on_discord(comparasion_result: dict, language: str) -> None:
     webhook = DiscordWebhook(localization_comparison_webhook_url)
@@ -75,6 +94,9 @@ def main() -> None:
 
                 except:
                     pass
+                
+            if len(comparasion_result["new_fields"]) > 0:
+                send_alert_to_updates_telegram_channel(comparasion_result)
 
         localization.save_file(localization_file_path)
 
