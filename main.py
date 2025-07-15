@@ -19,11 +19,12 @@ compressed_localizations_out_dir = os.path.join(localizations_out_dir, "compress
 def send_alert_to_updates_telegram_channel(comparasion_result: dict) -> None:
     bot = TeleBot(telegram_bot_token)
     new_fields = comparasion_result["new_fields"]
+    new_fields_text = [f"{new_field["key"]}: {new_field["value"]}" for new_field in new_fields]
     
     try:
         bot.send_message(
             chat_id = telegram_updates_channel_id,
-            text = f"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\n\n{"- \n".join(new_fields)}"
+            text = f"Parece que nosso detetive encontrou algo! Veja só, o que pode ser, ou não, pistas para coisas que há por vir no Dragon City:\n\n{"- \n".join(new_fields_text)}"
         )
 
     except:
