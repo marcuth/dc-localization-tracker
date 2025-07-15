@@ -95,7 +95,7 @@ def main() -> None:
                 except:
                     pass
                 
-            if len(comparasion_result["new_fields"]) > 0 and language === "br":
+            if len(comparasion_result["new_fields"]) > 0 and language == "br":
                 send_alert_to_updates_telegram_channel(comparasion_result)
 
         localization.save_file(localization_file_path)
