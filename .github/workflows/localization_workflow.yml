@@ -28,6 +28,8 @@ jobs:
         env:
           DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL: ${{ secrets.DISCORD_LOCALIZATION_COMPARISON_WEBHOOK_URL }}
           DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL: ${{ secrets.DISCORD_LOCALIZATION_FILE_SENDING_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_UPDATES_CHANNEL_ID: ${{ secrets.TELEGRAM_UPDATES_CHANNEL_ID }}
 
         run: |
           python main.py
@@ -44,5 +46,3 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_UPDATES_CHANNEL_ID: ${{ secrets.TELEGRAM_UPDATES_CHANNEL_ID }}
